@@ -1,17 +1,19 @@
 import express from "express"
-import config from "./config/config.js";
+import mongoose from 'mongoose';
+import { PORT, USER_DB, PASWORD_DB } from './common/conts.js'
 import productRouter from './routes/product.router.js';
 import cartRouter from './routes/cart.router.js';
-import userRouter from './routes/user.router.js';
 
 const app = express();
-const PORT = config.PORT
 
 app.use(express.json());
-app.use('/api/products',productRouter);
-app.use('/api/carts',cartRouter);
-app.use('/api/users',userRouter);
+app.use('/api/products/', productRouter);
+app.use('/api/carts/', cartRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port http://localhost:${PORT}`);
-})
+mongoose.connect(`mongodb+srv://${USER_DB}:${PASWORD_DB}@cluster0.u8h7hn5.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0`)
+.then(()=>console.log('Conexion a base de datos'))
+.catch(err=>console.log(err))
+
+app.listen(PORT, ()=>{
+    console.log(`Servidor en http://localhost:${PORT}`);
+});

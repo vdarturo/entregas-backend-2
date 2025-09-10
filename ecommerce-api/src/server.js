@@ -3,6 +3,7 @@ import config from "./config/config.js";
 import { errorHandler } from "./middlewares/error-handler.js";
 import productRouter from "./routes/product-router.js";
 import cartRouter from "./routes/cart-router.js";
+import userRouter from "./routes/user-router.js";
 import { initMongoDB } from "./config/db-connection.js";
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/products", productRouter);
 app.use("/carts", cartRouter);
+app.use("/users", userRouter);
 
 app.use(errorHandler);
 

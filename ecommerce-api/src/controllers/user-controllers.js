@@ -7,19 +7,22 @@ class UserController {
 
   register = async (req, res, next) => {
     try {
-      const response = await this.service.register(req.body);
-      res.json(response);
+      const user = await this.service.register(req.body);
+      const {first_name, last_name, age, email} = user
+      res.status(201).json({first_name, last_name, age, email});
     } catch (error) {
       next(error);
     }
   };
 
+
   login = async (req, res, next) => {
     try {
       const { email, password } = req.body;
       const user = await this.service.login(email, password);
-      const token = this.service.generateToken(user);
-      res.cookie('token', token, { httpOnly: true }).json({ token });
+      res.status(200).json("Usuario logeado");
+      //const token = this.service.generateToken(user);
+      //res.cookie('token', token, { httpOnly: true }).json({ token });
     } catch (error) {
       next(error);
     }

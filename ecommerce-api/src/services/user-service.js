@@ -6,23 +6,24 @@ class UserService {
     this.repository = repository;
   }
 
-  register = async () => {
+  register = async (body) => {
     try {
-      const response = await this.repository.register(req.body);
-      res.json(response);
+      const user = await this.repository.register(body);
+      if (!user) throw new CustomError("User registration failed", 400);
+      return user;
     } catch (error) {
-      next(error);
+      throw new Error(error);
     }
   };
 
-  login = async () => {
+  login = async (email, password) => {
     try {
-      const { email, password } = req.body;
       const user = await this.repository.login(email, password);
-      const token = this.repository.generateToken(user);
-      res.cookie('token', token, { httpOnly: true }).json({ token });
+      //const token = this.repository.generateToken(user);
+      //res.cookie('token', token, { httpOnly: true }).json({ token });
+      return user;
     } catch (error) {
-      next(error);
+      throw new Error(error);
     }
   };
 
@@ -30,7 +31,7 @@ class UserService {
     try {
       
     } catch (error) {
-      next(error);
+      throw new Error(error);
     }
   };
 }

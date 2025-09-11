@@ -19,9 +19,8 @@ class UserService {
   login = async (email, password) => {
     try {
       const user = await this.repository.login(email, password);
-      //const token = this.repository.generateToken(user);
-      //res.cookie('token', token, { httpOnly: true }).json({ token });
-      return user;
+      const token = this.repository.generateToken(user);
+      return token;
     } catch (error) {
       throw new Error(error);
     }

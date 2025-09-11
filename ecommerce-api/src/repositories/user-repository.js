@@ -38,7 +38,7 @@ class UserRepository {
     }
   };
 
-  /*generateToken = (user) => {
+  generateToken = (user) => {
     const token = jwt.sign(
       {
         email: user.email,
@@ -50,7 +50,7 @@ class UserRepository {
       { expiresIn: "20m" }
     );
     return token;
-  };*/
+  };
 }
 
 export const userRepository = new UserRepository(userDao);

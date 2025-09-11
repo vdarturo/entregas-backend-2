@@ -19,22 +19,12 @@ class UserController {
   login = async (req, res, next) => {
     try {
       const { email, password } = req.body;
-      const user = await this.service.login(email, password);
-      res.status(200).json("Usuario logeado");
-      //const token = this.service.generateToken(user);
-      //res.cookie('token', token, { httpOnly: true }).json({ token });
+      const token = await this.service.login(email, password);
+      res.header("Authorization", token).json({token});
     } catch (error) {
       next(error);
     }
   };
-
-  /*generateToken = async (req, res, next) => {
-    try {
-      
-    } catch (error) {
-      next(error);
-    }
-  };*/
 }
 
 export const userController = new UserController(userService);
